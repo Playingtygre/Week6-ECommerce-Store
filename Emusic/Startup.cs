@@ -14,15 +14,49 @@ using Emusic.Models;
 using Emusic.Data;
 using Emusic.Models.Policies;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc;
+
+
+
 
 namespace Emusic
 {
     public class Startup
     {
+
+        /*
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder().AddEnvironmentVariables();
+            builder.AddUserSecrets<Startup>();
+            Configuration = builder.Build();
+        }*/
+
+
+        /*
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder();
+
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+
+            Configuration = builder.Build();
+        }*/
+
+
+
+
+        // this is the original one
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
+        
+
 
         public IConfiguration Configuration { get; set; }
 
@@ -36,7 +70,14 @@ namespace Emusic
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-
+            //adding config 
+            /*
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            });
+            */
 
             services.AddDbContext<ProductDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ProductionString")));
@@ -70,8 +111,21 @@ namespace Emusic
 
             });
 
-            // add require HTTPs Insert Here.
 
+
+            // add require HTTPs Insert Here.
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
+
+            /*
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status301MovedPermanently;
+                options.HttpsPort = 5001;
+            });
+            */
 
         }
 
@@ -83,10 +137,19 @@ namespace Emusic
                 //If you wanted to add a live production database string enter it here.
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+               // app.UseHsts();
+                app.UseExceptionHandler("/Home/Error");
+            }
 
+
+            
             app.UseStaticFiles();
-
             app.UseAuthentication();
+            //Must use 
+           
+
 
             app.UseMvc(routes => routes.MapRoute(
                 name: "Default",

@@ -5,13 +5,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Emusic.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Emusic.Controllers
 {
     public class HomeController : Controller
     {
+        public IConfiguration Configuration { get; set; }
+
+        public HomeController(IConfiguration config)
+        {
+            Configuration = config;
+
+            //Rest of class definition
+        }
+
+
+
+
+
         public IActionResult Index()
         {
+            
+            //This is adding My user Secrets 
+            ViewData["myAppSetting"] = Configuration["myAppSetting"];
+            ViewData["myConnectionString"] = Configuration.GetConnectionString("myConnectionString");
             return View();
         }
 

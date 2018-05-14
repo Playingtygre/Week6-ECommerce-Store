@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Home Page";
 }
 
 
@@ -7,6 +7,13 @@
 <p> The place to buy your favorite music tickets </p>
 <a asp-controller="Account" asp-action="Register"> Register Page</a> <br>
 <a asp-controller="Account" asp-action="Login"> Login Page </a>
+
+<!--        -->
+<div>
+    <h1>Secrets test application</h1>
+    <b>myAppSetting:</b> @ViewData["myAppSetting"]<br />
+    <b>myConnectionString:</b> @ViewData["myConnectionString"]<br />
+</div>
 
 
 

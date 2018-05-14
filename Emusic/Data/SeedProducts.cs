@@ -16,7 +16,7 @@ namespace Emusic.Data
             {
                 Name = " ReD hot chili Peppers Tickets",
                 Description= "the hottest upcoming events and concerts in LA ",
-                ImageHref="/images/Admit-One-Ticket.jpg",
+                ImageHref="/images/Chili.jpg",
                 Price = 1.00M,
             },
 
@@ -32,7 +32,7 @@ namespace Emusic.Data
             {
                 Name = "Bruno Mars Tickets ",
                 Description= "the hottest upcoming events and concerts in LA ",
-                ImageHref="/images/Admit-One-Ticket.jpg",
+                ImageHref="/images/Bruno.jpg",
                 Price = 1.00M,
             },
 
